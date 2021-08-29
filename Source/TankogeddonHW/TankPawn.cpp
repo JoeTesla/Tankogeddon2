@@ -30,6 +30,11 @@ ATankPawn::ATankPawn()
 
 }
 
+void ATankPawn::MoveForward(float AxisValue)
+{
+	targetForwardAxisValue = AxisValue;
+}
+
 // Called when the game starts or when spawned
 void ATankPawn::BeginPlay()
 {
@@ -42,12 +47,10 @@ void ATankPawn::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
 
+	FVector currentLocation = GetActorLocation();
+	FVector forwardVector = GetActorForwardVector();
+	FVector movePosition = currentLocation + forwardVector * MoveSpeed * targetForwardAxisValue * DeltaTime;
+	SetActorLocation(movePosition, true);
+
+
 }
-
-// Called to bind functionality to input
-void ATankPawn::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
-{
-	Super::SetupPlayerInputComponent(PlayerInputComponent);
-
-}
-
